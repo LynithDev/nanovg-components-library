@@ -1,0 +1,48 @@
+import org.gradle.internal.os.OperatingSystem
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group 'dev.lynith.nanovg.components'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    switch (OperatingSystem.current()) {
+        case OperatingSystem.LINUX:
+            def osArch = System.getProperty('os.arch')
+            project.ext.lwjglNatives = osArch.startsWith('arm') || osArch.startsWith('aarch64')
+                    ? "natives-linux-${osArch.contains('64') || osArch.startsWith('armv8') ? 'arm64' : 'arm32'}"
+                    : "natives-linux"
+            break
+        case OperatingSystem.MAC_OS:
+            project.ext.lwjglNatives = System.getProperty('os.arch').startsWith('aarch64') ? 'natives-macos-arm64' : 'natives-macos'
+            break
+        case OperatingSystem.WINDOWS:
+            def osArch = System.getProperty('os.arch')
+            project.ext.lwjglNatives = osArch.contains('64')
+                    ? "natives-windows${osArch.startsWith('aarch64') ? '-arm64' : ''}"
+                    : 'natives-windows-x86'
+            break
+    }
+
+    implementation platform("org.lwjgl:lwjgl-bom:3.3.1")
+
+    implementation "org.lwjgl:lwjgl"
+    implementation "org.lwjgl:lwjgl-nanovg"
+    implementation "org.lwjgl:lwjgl-opengl"
+    implementation "org.lwjgl:lwjgl-glfw"
+
+    runtimeOnly "org.lwjgl:lwjgl:3.3.1:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-nanovg:3.3.1:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-opengl:3.3.1:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-glfw:3.3.1:${lwjglNatives}"
+}
