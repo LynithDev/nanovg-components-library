@@ -9,9 +9,12 @@ public class StackLayout extends AbstractLayout {
     public void render(PointBounds mouseBounds) {
         super.render(mouseBounds);
 
+        float y = getTop();
+
         for (int i = 0; i < getChildren().size(); i++) {
             Component child = getChildren().get(i);
-            child.setBounds(getLeft(), getTop() + i * child.getHeight(), getWidth(), child.getHeight());
+            child.setBounds(getLeft() + child.getBorderWidth(), y + child.getBorderWidth(), getWidth() == 0 ? child.getWidth() : getWidth(), child.getHeight());
+            y += child.getOuterHeight();
         }
     }
 

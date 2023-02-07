@@ -26,7 +26,9 @@ public abstract class AbstractLayout extends Component {
         super.onClick(mouseBounds, mouseButton);
 
         for (Component child : children) {
-            child.onClick(mouseBounds, mouseButton);
+            if (mouseBounds.inside(child.getBounds())) {
+                child.onClick(mouseBounds, mouseButton);
+            }
         }
     }
 

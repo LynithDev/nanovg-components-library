@@ -18,7 +18,7 @@ public abstract class Component extends NVGHelper {
 
         drawRectRound(getLeft(), getTop(), getWidth(), getHeight(), getBorder().getRadius(), getBackgroundColor());
         if (hasBorder())
-            drawRectRoundOutline(getLeft(), getTop(), getWidth(), getHeight(), getBorder().getRadius(), getBorderWidth(), getBorder().getColor());
+            drawRectRoundOutline(getLeft() - getBorderWidth() / 2, getTop() - getBorderWidth() / 2, getWidth() + getBorderWidth(), getHeight() + getBorderWidth(), getBorder().getRadius(), getBorderWidth(), getBorder().getColor());
     }
 
     public void init() {}
@@ -67,19 +67,35 @@ public abstract class Component extends NVGHelper {
     // --- Helpers ---
 
     public float getLeft() {
-        return bounds.getLeft() + margin.getLeft();
+        return bounds.getLeft();
     }
 
     public float getTop() {
-        return bounds.getTop() + margin.getTop();
+        return bounds.getTop();
     }
 
     public float getWidth() {
-        return bounds.getWidth() - margin.getLeft() - margin.getRight();
+        return bounds.getWidth();
     }
 
     public float getHeight() {
-        return bounds.getHeight() - margin.getTop() - margin.getBottom();
+        return bounds.getHeight();
+    }
+
+    public float getOuterLeft() {
+        return bounds.getLeft() - margin.getLeft() - border.getWidth();
+    }
+
+    public float getOuterTop() {
+        return bounds.getTop() - margin.getTop() - border.getWidth();
+    }
+
+    public float getOuterWidth() {
+        return bounds.getWidth() + margin.getLeft() + margin.getRight() + border.getWidth() * 2;
+    }
+
+    public float getOuterHeight() {
+        return bounds.getHeight() + margin.getTop() + margin.getBottom() + border.getWidth() * 2;
     }
 
     public float getCenterX() {
@@ -172,30 +188,6 @@ public abstract class Component extends NVGHelper {
 
     public void setBorderWidth(float width) {
         border.setWidth(width);
-    }
-
-    public float getInnerWidth() {
-        return getWidth() - getPaddingHorizontal() - getBorderWidth();
-    }
-
-    public float getInnerHeight() {
-        return getHeight() - getPaddingVertical() - getBorderWidth();
-    }
-
-    public float getInnerLeft() {
-        return getLeft() + getPaddingLeft() + getBorderWidth();
-    }
-
-    public float getInnerTop() {
-        return getTop() + getPaddingTop() + getBorderWidth();
-    }
-
-    public float getInnerRight() {
-        return getRight() - getPaddingRight() - getBorderWidth();
-    }
-
-    public float getInnerBottom() {
-        return getBottom() - getPaddingBottom() - getBorderWidth();
     }
 
 }

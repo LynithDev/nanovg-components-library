@@ -8,6 +8,7 @@ import dev.lynith.nanovg.components.utils.GLUtils;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.lwjgl.glfw.GLFW;
 
 public abstract class ScreenComponent extends Component {

@@ -20,7 +20,12 @@ public class Label extends Component {
     public void init() {
         super.init();
 
-        setBounds(0, 0, NVGManager.getRegularFont().getWidth(NVGManager.getNvg(), text), getTextSize());
+        System.out.println(NVGManager.getRegularFont().getHeight(NVGManager.getNvg(), getTextSize()));
+        setBounds(0, 0, getTextWidth(text), getTextSize());
+    }
+
+    public static float getTextWidth(String text) {
+        return NVGManager.getRegularFont().getWidth(NVGManager.getNvg(), text);
     }
 
     @Override

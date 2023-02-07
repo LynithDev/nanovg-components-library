@@ -13,17 +13,27 @@ import java.util.function.Consumer;
 public class Button extends Component {
 
     @Setter
-    private Consumer<Button> onClick;
+    private ClickCallback onClick;
 
-    @Getter @Setter
+    @Getter
     private String text;
+
+    public void setText(String text) {
+        this.text = text;
+        label.setText(text);
+    }
 
     private Label label;
 
-    public Button(String text, Consumer<Button> onClick) {
+    public Button(String text, ClickCallback onClick) {
         super();
         this.onClick = onClick;
+        this.text = text;
         this.label = new Label(text);
+    }
+
+    public Button(String text) {
+        this(text, null);
     }
 
     @Override
@@ -46,7 +56,12 @@ public class Button extends Component {
     @Override
     public void onClick(PointBounds mouseBounds, int button) {
         super.onClick(mouseBounds, button);
-        onClick.accept(this);
+        onClick.accept(mouseBounds, button);
+    }
+
+    @FunctionalInterface
+    public interface ClickCallback {
+        void accept(PointBounds mouseBounds, int button);
     }
 
 }
