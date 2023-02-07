@@ -18,5 +18,7 @@ public class MainScreen extends ScreenComponent {
                 new Label("Hello World"),
                 new Button("Click Me", button -> System.out.println("Clicked!"))
         );
+
+        getLayout().init();
     }
 }

@@ -57,6 +57,15 @@ public abstract class AbstractLayout extends Component {
         }
     }
 
+    @Override
+    public void init() {
+        super.init();
+
+        for (Component child : children) {
+            child.init();
+        }
+    }
+
     // --- Styles ---
 
     @Getter @Setter

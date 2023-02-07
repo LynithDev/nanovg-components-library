@@ -4,7 +4,7 @@ public class DemoMain {
 
     public DemoMain(long windowHandle) {
         NVGManager.createContext(windowHandle);
-        NVGManager.setupInput();
+        NVGManager.setupCallbacks();
         NVGManager.displayScreen(new MainScreen());
     }
 

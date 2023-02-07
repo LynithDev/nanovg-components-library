@@ -3,23 +3,28 @@ package dev.lynith.nanovg.components.ui;
 import dev.lynith.nanovg.components.Font;
 import dev.lynith.nanovg.components.NVGManager;
 import dev.lynith.nanovg.components.utils.Color;
+import dev.lynith.nanovg.components.utils.GLUtils;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.opengl.GL11;
+
+import java.nio.IntBuffer;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 
 public class NVGHelper {
 
     public static int getScreenWidth() {
-        int[] viewport = new int[4];
-        GL11.glGetIntegerv(GL11.GL_VIEWPORT, viewport);
-        return viewport[2];
+        IntBuffer x = BufferUtils.createIntBuffer(1);
+        GLFW.glfwGetWindowSize(GLUtils.windowHandle, x, null);
+        return x.get(0);
     }
 
     public static int getScreenHeight() {
-        int[] viewport = new int[4];
-        GL11.glGetIntegerv(GL11.GL_VIEWPORT, viewport);
-        return viewport[3];
+        IntBuffer y = BufferUtils.createIntBuffer(1);
+        GLFW.glfwGetWindowSize(GLUtils.windowHandle, null, y);
+        return y.get(0);
     }
 
     public static void createFrame(int width, int height) {

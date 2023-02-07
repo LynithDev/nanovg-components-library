@@ -1,11 +1,14 @@
 package dev.lynith.nanovg.components.ui;
 
 import dev.lynith.nanovg.components.ui.layouts.AbstractLayout;
+import dev.lynith.nanovg.components.ui.layouts.StackLayout;
 import dev.lynith.nanovg.components.utils.BoxBounds;
 import dev.lynith.nanovg.components.utils.Color;
+import dev.lynith.nanovg.components.utils.GLUtils;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
 import lombok.Setter;
+import org.lwjgl.glfw.GLFW;
 
 public abstract class ScreenComponent extends Component {
 
@@ -22,6 +25,17 @@ public abstract class ScreenComponent extends Component {
     }
 
     public void onClose() {}
+    public void onResize(int width, int height) {
+        setBounds(getParent().getBounds());
+    }
+
+    @Override
+    public void init() {
+        super.init();
+
+        if (layout != null)
+            layout.init();
+    }
 
     @Override
     public void render(PointBounds mouseBounds) {

@@ -31,6 +31,7 @@ public class Button extends Component {
         super.init();
         setBackgroundColor(Color.GREEN);
         setBorder(new Border(5, Color.BLACK));
+        setBounds(0, 0, 100, 50);
 
         label.setBounds(getBounds());
         label.setTextAlignment(getTextAlignment());

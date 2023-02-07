@@ -15,9 +15,6 @@ import org.lwjgl.nanovg.NanoVGGL3;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
-
 public class NVGManager {
 
     @Getter @Setter
@@ -42,14 +39,19 @@ public class NVGManager {
         }
     }
 
-    public static void setupInput() {
+    public static void setupCallbacks() {
+        GLFW.glfwSetWindowSizeCallback(GLUtils.windowHandle, (window, width, height) -> {
+            if (getCurrentScreen() != null)
+                getCurrentScreen().onResize(width, height);
+        });
+
         GLFW.glfwSetMouseButtonCallback(GLUtils.windowHandle, (window, button, action, mods) -> {
             PointBounds mouse = GLUtils.getMouseBounds();
-            if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+            if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && action == GLFW.GLFW_PRESS) {
                 getCurrentScreen().onClick(mouse, button);
             }
 
-            if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
+            if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && action == GLFW.GLFW_RELEASE) {
                 getCurrentScreen().onRelease(mouse, button);
             }
         });
@@ -59,7 +61,7 @@ public class NVGManager {
         });
 
         GLFW.glfwSetKeyCallback(GLUtils.windowHandle, (window, key, scancode, action, mods) -> {
-            if (action == GLFW_PRESS && glfwGetKeyName(key, scancode) == null && key != GLFW_KEY_SPACE) {
+            if (action == GLFW.GLFW_PRESS && GLFW.glfwGetKeyName(key, scancode) == null && key != GLFW.GLFW_KEY_SPACE) {
                 onKeyTyped(key);
             }
         });
