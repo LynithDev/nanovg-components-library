@@ -1,24 +1,19 @@
 package dev.lynith.nanovg.components;
 
-import dev.lynith.nanovg.components.fonts.FontManager;
 import dev.lynith.nanovg.components.ui.NVGHelper;
 import dev.lynith.nanovg.components.ui.ScreenComponent;
 import dev.lynith.nanovg.components.utils.GLUtils;
 import dev.lynith.nanovg.components.utils.PointBounds;
-import dev.lynith.nanovg.components.utils.SystemUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 public class NVGManager {
 
-    @Getter @Setter
-    private static Font regularFont, mediumFont, semiBoldFont, boldFont;
+//    @Getter @Setter
+//    private static AbstractTheme theme;
 
     @Getter
     private static long nvg;
@@ -74,13 +69,7 @@ public class NVGManager {
                 throw new RuntimeException("Could not init NanoVG context");
 
             NanoVG.nvgShapeAntiAlias(nvg, true);
-            FontManager.getManager().getSystemFonts();
             GLUtils.windowHandle = windowHandle;
-
-            regularFont = new Font(nvg, Files.newInputStream(Paths.get(FontManager.getManager().getDefaultFont())));
-            mediumFont = new Font(nvg, Files.newInputStream(Paths.get(FontManager.getManager().getDefaultFont())));
-            semiBoldFont = new Font(nvg, Files.newInputStream(Paths.get(FontManager.getManager().getDefaultFont())));
-            boldFont = new Font(nvg, Files.newInputStream(Paths.get(FontManager.getManager().getDefaultFont())));
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

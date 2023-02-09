@@ -1,7 +1,8 @@
 package dev.lynith.nanovg.components.ui;
 
-import dev.lynith.nanovg.components.Font;
+import dev.lynith.nanovg.components.ui.font.Font;
 import dev.lynith.nanovg.components.NVGManager;
+import dev.lynith.nanovg.components.ui.font.FontManager;
 import dev.lynith.nanovg.components.utils.Color;
 import dev.lynith.nanovg.components.utils.GLUtils;
 import org.lwjgl.BufferUtils;
@@ -100,12 +101,12 @@ public class NVGHelper {
     public static void drawText(String text, float x, float y, float fontSize, Color color) {
         nvgBeginPath(NVGManager.getNvg());
         nvgFillColor(NVGManager.getNvg(), createColor(color));
-        NVGManager.getRegularFont().renderString(NVGManager.getNvg(), text, x, y, fontSize);
+        FontManager.getManager().getCurrentFamily().getRegular().renderString(NVGManager.getNvg(), text, x, y, fontSize);
         nvgFill(NVGManager.getNvg());
     }
 
     public static void drawTextCentered(String text, float x, float y, float fontSize, Color color) {
-        float textWidth = NVGManager.getRegularFont().getWidth(NVGManager.getNvg(), text);
+        float textWidth = FontManager.getManager().getCurrentFamily().getRegular().getWidth(NVGManager.getNvg(), text);
         drawText(text, x - (textWidth / 2), y, fontSize, color);
     }
 

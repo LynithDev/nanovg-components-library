@@ -1,7 +1,12 @@
-package dev.lynith.nanovg.components;
+package dev.lynith.nanovg.components.ui.font;
 
+import dev.lynith.nanovg.components.NVGManager;
+import lombok.Getter;
 import org.lwjgl.nanovg.NanoVG;
 
+import javax.swing.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
@@ -9,8 +14,12 @@ public class Font {
 
     private final int handle;
 
-    public Font(long nvg, InputStream inputStream) throws Exception {
-        this.handle = NanoVG.nvgCreateFontMem(nvg, "", loadResource(inputStream), 0);
+    @Getter
+    private final FontType type;
+
+    public Font(InputStream inputStream, FontType type) throws Exception {
+        this.type = type;
+        this.handle = NanoVG.nvgCreateFontMem(NVGManager.getNvg(), "", loadResource(inputStream), 0);
     }
 
     private void bind(long ctx) {

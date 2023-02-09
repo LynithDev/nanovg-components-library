@@ -1,5 +1,6 @@
 package dev.lynith.nanovg.components.ui;
 
+import dev.lynith.nanovg.components.ui.font.FontType;
 import dev.lynith.nanovg.components.ui.styles.Border;
 import dev.lynith.nanovg.components.ui.styles.Spacing;
 import dev.lynith.nanovg.components.ui.styles.TextAlignment;
@@ -50,7 +51,10 @@ public abstract class Component extends NVGHelper {
     private Color textColor = Color.BLACK;
 
     @Getter @Setter
-    private int textSize = 16;
+    private int fontSize = 16;
+
+    @Getter @Setter
+    private FontType fontWeight = FontType.REGULAR;
 
     @Getter @Setter
     private TextAlignment textAlignment = TextAlignment.LEFT;
@@ -69,125 +73,42 @@ public abstract class Component extends NVGHelper {
     public float getLeft() {
         return bounds.getLeft();
     }
-
     public float getTop() {
         return bounds.getTop();
     }
-
     public float getWidth() {
         return bounds.getWidth();
     }
-
     public float getHeight() {
         return bounds.getHeight();
     }
 
-    public float getOuterLeft() {
-        return bounds.getLeft() - margin.getLeft() - border.getWidth();
-    }
+    public float getOuterLeft() { return getLeft() - getMargin().getLeft(); }
+    public float getOuterTop() { return getTop() - getMargin().getTop(); }
+    public float getOuterWidth() { return getWidth() + getMargin().getLeft() + getMargin().getRight(); }
+    public float getOuterHeight() { return getHeight() + getMargin().getTop() + getMargin().getBottom(); }
 
-    public float getOuterTop() {
-        return bounds.getTop() - margin.getTop() - border.getWidth();
-    }
+    public float getInnerLeft() { return getLeft() + getPadding().getLeft(); }
+    public float getInnerTop() { return getTop() + getPadding().getTop(); }
+    public float getInnerWidth() { return getWidth() - getPadding().getLeft() - getPadding().getRight(); }
+    public float getInnerHeight() { return getHeight() - getPadding().getTop() - getPadding().getBottom(); }
 
-    public float getOuterWidth() {
-        return bounds.getWidth() + margin.getLeft() + margin.getRight() + border.getWidth() * 2;
-    }
+    public float getBorderWidth() { return getBorder().getWidth(); }
+    public float getBorderRadius() { return getBorder().getRadius(); }
+    public Color getBorderColor() { return getBorder().getColor(); }
+    public boolean hasBorder() { return getBorderWidth() > 0; }
 
-    public float getOuterHeight() {
-        return bounds.getHeight() + margin.getTop() + margin.getBottom() + border.getWidth() * 2;
-    }
+    public float getCenterX() { return getLeft() + getWidth() / 2; }
+    public float getCenterY() { return getTop() + getHeight() / 2; }
 
-    public float getCenterX() {
-        return getLeft() + (getWidth() / 2);
-    }
+    public float getPaddingLeft() { return getPadding().getLeft(); }
+    public float getPaddingTop() { return getPadding().getTop(); }
+    public float getPaddingRight() { return getPadding().getRight(); }
+    public float getPaddingBottom() { return getPadding().getBottom(); }
 
-    public float getCenterY() {
-        return getTop() + (getHeight() / 2);
-    }
-
-    public float getRight() {
-        return getLeft() + getWidth();
-    }
-
-    public float getBottom() {
-        return getTop() + getHeight();
-    }
-
-    public float getPaddingLeft() {
-        return padding.getLeft();
-    }
-
-    public float getPaddingTop() {
-        return padding.getTop();
-    }
-
-    public float getPaddingRight() {
-        return padding.getRight();
-    }
-
-    public float getPaddingBottom() {
-        return padding.getBottom();
-    }
-
-    public float getPaddingAll() {
-        return Math.max(padding.getLeft(), Math.max(padding.getTop(), Math.max(padding.getRight(), padding.getBottom())));
-    }
-
-    public float getPaddingHorizontal() {
-        return Math.max(padding.getLeft(), padding.getRight());
-    }
-
-    public float getPaddingVertical() {
-        return Math.max(padding.getTop(), padding.getBottom());
-    }
-
-    public float getMarginLeft() {
-        return margin.getLeft();
-    }
-
-    public float getMarginTop() {
-        return margin.getTop();
-    }
-
-    public float getMarginRight() {
-        return margin.getRight();
-    }
-
-    public float getMarginBottom() {
-        return margin.getBottom();
-    }
-
-    public float getMarginAll() {
-        return Math.max(margin.getLeft(), Math.max(margin.getTop(), Math.max(margin.getRight(), margin.getBottom())));
-    }
-
-    public float getMarginHorizontal() {
-        return Math.max(margin.getLeft(), margin.getRight());
-    }
-
-    public float getMarginVertical() {
-        return Math.max(margin.getTop(), margin.getBottom());
-    }
-
-    public float getBorderWidth() {
-        return getBorder().getWidth();
-    }
-
-    public boolean hasBorder() {
-        return getBorder().getWidth() > 0;
-    }
-
-    public void setBorderColor(Color color) {
-        border.setColor(color);
-    }
-
-    public void setBorderRadius(float radius) {
-        border.setRadius((int) radius);
-    }
-
-    public void setBorderWidth(float width) {
-        border.setWidth(width);
-    }
+    public float getMarginLeft() { return getMargin().getLeft(); }
+    public float getMarginTop() { return getMargin().getTop(); }
+    public float getMarginRight() { return getMargin().getRight(); }
+    public float getMarginBottom() { return getMargin().getBottom(); }
 
 }

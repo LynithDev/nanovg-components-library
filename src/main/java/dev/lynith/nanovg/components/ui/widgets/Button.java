@@ -23,7 +23,7 @@ public class Button extends Component {
         label.setText(text);
     }
 
-    private Label label;
+    private final Label label;
 
     public Button(String text, ClickCallback onClick) {
         super();
@@ -39,8 +39,7 @@ public class Button extends Component {
     @Override
     public void init() {
         super.init();
-        setBackgroundColor(Color.GREEN);
-        setBorder(new Border(5, Color.BLACK));
+        setBorder(new Border(1, Color.BLACK));
         setBounds(0, 0, 100, 50);
 
         label.setBounds(getBounds());
