@@ -39,6 +39,7 @@ public class Button extends Component<ComponentStyle> {
         super.init();
         setBounds(0, 0, 100, 50);
 
+        label.init();
         label.setBounds(getBounds());
     }
 

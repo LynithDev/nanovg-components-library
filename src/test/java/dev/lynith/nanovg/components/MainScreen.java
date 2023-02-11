@@ -31,7 +31,6 @@ public class MainScreen extends ScreenComponent {
         });
 
         getLayout().add(btn);
-
         getLayout().init();
     }
 
