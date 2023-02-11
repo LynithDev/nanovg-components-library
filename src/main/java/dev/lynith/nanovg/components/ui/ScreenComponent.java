@@ -1,24 +1,20 @@
 package dev.lynith.nanovg.components.ui;
 
+import dev.lynith.nanovg.components.theme.ThemeManager;
 import dev.lynith.nanovg.components.ui.layouts.AbstractLayout;
-import dev.lynith.nanovg.components.ui.layouts.StackLayout;
-import dev.lynith.nanovg.components.utils.BoxBounds;
-import dev.lynith.nanovg.components.utils.Color;
-import dev.lynith.nanovg.components.utils.GLUtils;
+import dev.lynith.nanovg.components.ui.layouts.impl.StackLayout;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
-import org.lwjgl.glfw.GLFW;
 
-public abstract class ScreenComponent extends Component {
+public abstract class ScreenComponent extends Component<ComponentStyle> {
 
-    public ScreenComponent(Component root) {
+    public ScreenComponent(Component<ComponentStyle> root) {
         setParent(root);
     }
 
     @Getter @Setter
-    private AbstractLayout layout;
+    private AbstractLayout layout = new StackLayout();
 
     public ScreenComponent() {
         setParent(new ScreenWrapper());
@@ -34,6 +30,8 @@ public abstract class ScreenComponent extends Component {
     public void init() {
         super.init();
 
+        setStyle(ThemeManager.getManager().getCurrentTheme().getScreenStyle());
+
         if (layout != null)
             layout.init();
     }
@@ -44,6 +42,15 @@ public abstract class ScreenComponent extends Component {
 
         if (layout != null)
             layout.render(mouseBounds);
+    }
+
+    @Override
+    public void onThemeUpdate() {
+        super.onThemeUpdate();
+        setStyle(ThemeManager.getManager().getCurrentTheme().getScreenStyle()); // For some reason, the style is not updated for the screen component
+
+        if (layout != null)
+            layout.onThemeUpdate();
     }
 
     @Override

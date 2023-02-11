@@ -30,4 +30,8 @@ public class Spacing {
         this(0);
     }
 
+    public Spacing(float vertical, float horizontal) {
+        this(vertical, horizontal, vertical, horizontal);
+    }
+
 }

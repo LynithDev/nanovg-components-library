@@ -75,16 +75,16 @@ public class FontManager {
     private void loadFont() {
         try {
             FontFamily family = new FontFamily(DEFAULT_FONT_FAMILY);
-            family.add(new Font(getFontStream("Light"), FontType.LIGHT),
-                    new Font(getFontStream("LightItalic"), FontType.LIGHT_ITALIC),
-                    new Font(getFontStream("Regular"), FontType.REGULAR),
-                    new Font(getFontStream("Italic"), FontType.REGULAR_ITALIC),
-                    new Font(getFontStream("Medium"), FontType.MEDIUM),
-                    new Font(getFontStream("MediumItalic"), FontType.MEDIUM_ITALIC),
-                    new Font(getFontStream("SemiBold"), FontType.SEMI_BOLD),
-                    new Font(getFontStream("SemiBoldItalic"), FontType.SEMI_BOLD_ITALIC),
-                    new Font(getFontStream("Bold"), FontType.BOLD),
-                    new Font(getFontStream("BoldItalic"), FontType.BOLD_ITALIC));
+            family.add(new Font(getFontStream("Light"), FontWeight.LIGHT),
+                    new Font(getFontStream("LightItalic"), FontWeight.LIGHT_ITALIC),
+                    new Font(getFontStream("Regular"), FontWeight.REGULAR),
+                    new Font(getFontStream("Italic"), FontWeight.REGULAR_ITALIC),
+                    new Font(getFontStream("Medium"), FontWeight.MEDIUM),
+                    new Font(getFontStream("MediumItalic"), FontWeight.MEDIUM_ITALIC),
+                    new Font(getFontStream("SemiBold"), FontWeight.SEMI_BOLD),
+                    new Font(getFontStream("SemiBoldItalic"), FontWeight.SEMI_BOLD_ITALIC),
+                    new Font(getFontStream("Bold"), FontWeight.BOLD),
+                    new Font(getFontStream("BoldItalic"), FontWeight.BOLD_ITALIC));
 
             add(family);
         } catch (Exception e) {

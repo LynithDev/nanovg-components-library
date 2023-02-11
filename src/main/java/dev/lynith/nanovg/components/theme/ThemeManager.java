@@ -1,15 +1,21 @@
 package dev.lynith.nanovg.components.theme;
 
-import java.util.ArrayList;
-import java.util.List;
+import dev.lynith.nanovg.components.theme.impl.LightTheme;
+import lombok.Getter;
 
 public class ThemeManager {
 
-    private final List<Class<?>> classes = new ArrayList<>();
+    @Getter
+    private AbstractTheme currentTheme = new LightTheme();
 
-    public void register(Object object) {
-        classes.add(object.getClass());
+    private static ThemeManager instance;
+    public static ThemeManager getManager() {
+        if (instance == null) instance = new ThemeManager();
+        return instance;
     }
 
+    public void setCurrentTheme(AbstractTheme theme) {
+        this.currentTheme = theme;
+    }
 
 }

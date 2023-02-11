@@ -1,16 +1,14 @@
 package dev.lynith.nanovg.components.ui.widgets;
 
+import dev.lynith.nanovg.components.theme.ThemeManager;
 import dev.lynith.nanovg.components.ui.Component;
-import dev.lynith.nanovg.components.ui.styles.Border;
-import dev.lynith.nanovg.components.ui.styles.TextAlignment;
+import dev.lynith.nanovg.components.ui.ComponentStyle;
 import dev.lynith.nanovg.components.utils.Color;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.function.Consumer;
-
-public class Button extends Component {
+public class Button extends Component<ComponentStyle> {
 
     @Setter
     private ClickCallback onClick;
@@ -39,11 +37,9 @@ public class Button extends Component {
     @Override
     public void init() {
         super.init();
-        setBorder(new Border(1, Color.BLACK));
         setBounds(0, 0, 100, 50);
 
         label.setBounds(getBounds());
-        label.setTextAlignment(getTextAlignment());
     }
 
     @Override
@@ -55,12 +51,18 @@ public class Button extends Component {
     @Override
     public void onClick(PointBounds mouseBounds, int button) {
         super.onClick(mouseBounds, button);
-        onClick.accept(mouseBounds, button);
+        onClick.accept(mouseBounds, button, this);
+    }
+
+    @Override
+    public void onThemeUpdate() {
+        super.onThemeUpdate();
+
+        label.onThemeUpdate();
     }
 
     @FunctionalInterface
     public interface ClickCallback {
-        void accept(PointBounds mouseBounds, int button);
+        void accept(PointBounds mouseBounds, int mouseButton, Button button);
     }
-
 }

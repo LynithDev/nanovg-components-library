@@ -2,7 +2,7 @@ package dev.lynith.nanovg.components.ui.font;
 
 import lombok.Getter;
 
-public enum FontType {
+public enum FontWeight {
 
     THIN(100, false),
     EXTRA_LIGHT(200, false),
@@ -30,7 +30,7 @@ public enum FontType {
     @Getter
     private final Boolean italic;
 
-    FontType(Integer weight, Boolean italic) {
+    FontWeight(Integer weight, Boolean italic) {
         this.weight = weight;
         this.italic = italic;
     }

@@ -1,23 +1,23 @@
 package dev.lynith.nanovg.components.ui.layouts;
 
 import dev.lynith.nanovg.components.ui.Component;
-import dev.lynith.nanovg.components.ui.styles.LayoutDirection;
-import dev.lynith.nanovg.components.ui.styles.Overflow;
-import dev.lynith.nanovg.components.ui.styles.Wrap;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractLayout extends Component {
+public abstract class AbstractLayout extends Component<LayoutStyles> {
 
     @Getter
-    private final List<Component> children = new ArrayList<>();
+    private final List<Component<?>> children = new ArrayList<>();
 
-    public void add(Component... component) {
+    public AbstractLayout() {
+        super(new LayoutStyles());
+    }
+
+    public void add(Component<?>... component) {
         children.addAll(Arrays.asList(component));
     }
 
@@ -25,7 +25,7 @@ public abstract class AbstractLayout extends Component {
     public void onClick(PointBounds mouseBounds, int mouseButton) {
         super.onClick(mouseBounds, mouseButton);
 
-        for (Component child : children) {
+        for (Component<?> child : children) {
             if (mouseBounds.inside(child.getBounds())) {
                 child.onClick(mouseBounds, mouseButton);
             }
@@ -36,7 +36,7 @@ public abstract class AbstractLayout extends Component {
     public void onRelease(PointBounds mouseBounds, int state) {
         super.onRelease(mouseBounds, state);
 
-        for (Component child : children) {
+        for (Component<?> child : children) {
             child.onRelease(mouseBounds, state);
         }
     }
@@ -45,7 +45,7 @@ public abstract class AbstractLayout extends Component {
     public void onKeyTyped(char typedChar, int keyCode) {
         super.onKeyTyped(typedChar, keyCode);
 
-        for (Component child : children) {
+        for (Component<?> child : children) {
             child.onKeyTyped(typedChar, keyCode);
         }
     }
@@ -54,7 +54,7 @@ public abstract class AbstractLayout extends Component {
     public void render(PointBounds mouseBounds) {
         super.render(mouseBounds);
 
-        for (Component child : children) {
+        for (Component<?> child : children) {
             child.render(mouseBounds);
         }
     }
@@ -63,20 +63,18 @@ public abstract class AbstractLayout extends Component {
     public void init() {
         super.init();
 
-        for (Component child : children) {
+        for (Component<?> child : children) {
             child.init();
         }
     }
 
-    // --- Styles ---
+    @Override
+    public void onThemeUpdate() {
+        super.onThemeUpdate();
 
-    @Getter @Setter
-    private LayoutDirection direction = LayoutDirection.VERTICAL;
-
-    @Getter @Setter
-    private Wrap wrap = Wrap.NO_WRAP;
-
-    @Getter @Setter
-    private Overflow overflow = Overflow.VISIBLE;
+        for (Component<?> child : children) {
+            child.onThemeUpdate();
+        }
+    }
 
 }

@@ -4,9 +4,6 @@ import dev.lynith.nanovg.components.NVGManager;
 import lombok.Getter;
 import org.lwjgl.nanovg.NanoVG;
 
-import javax.swing.*;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
@@ -15,9 +12,9 @@ public class Font {
     private final int handle;
 
     @Getter
-    private final FontType type;
+    private final FontWeight type;
 
-    public Font(InputStream inputStream, FontType type) throws Exception {
+    public Font(InputStream inputStream, FontWeight type) throws Exception {
         this.type = type;
         this.handle = NanoVG.nvgCreateFontMem(NVGManager.getNvg(), "", loadResource(inputStream), 0);
     }
