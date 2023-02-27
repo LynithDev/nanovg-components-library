@@ -1,4 +1,4 @@
-package dev.lynith.nanovg.components.ui.styles;
+package dev.lynith.nanovg.components.ui.styles.impl;
 
 import dev.lynith.nanovg.components.utils.Color;
 import lombok.Getter;

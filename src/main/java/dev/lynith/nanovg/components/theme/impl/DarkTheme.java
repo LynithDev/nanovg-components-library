@@ -1,11 +1,12 @@
 package dev.lynith.nanovg.components.theme.impl;
 
 import dev.lynith.nanovg.components.theme.AbstractTheme;
-import dev.lynith.nanovg.components.ui.ComponentStyle;
+import dev.lynith.nanovg.components.ui.styles.ComponentStyle;
 import dev.lynith.nanovg.components.ui.ScreenComponent;
 import dev.lynith.nanovg.components.ui.layouts.AbstractLayout;
-import dev.lynith.nanovg.components.ui.styles.Border;
-import dev.lynith.nanovg.components.ui.styles.Spacing;
+import dev.lynith.nanovg.components.ui.styles.impl.Border;
+import dev.lynith.nanovg.components.ui.styles.impl.Spacing;
+import dev.lynith.nanovg.components.ui.styles.impl.TextWrap;
 import dev.lynith.nanovg.components.ui.widgets.Button;
 import dev.lynith.nanovg.components.ui.widgets.Label;
 import dev.lynith.nanovg.components.utils.Color;
@@ -30,21 +31,21 @@ public class DarkTheme extends AbstractTheme {
 
     @Override
     public ComponentStyle getScreenStyle() {
-        return new ComponentStyle()
+        return ComponentStyle.defaults()
                 .setBackgroundColor(backgroundColor)
                 .setForegroundColor(foregroundColor);
     }
 
     @Override
     public ComponentStyle getLayoutStyle() {
-        return new ComponentStyle()
+        return ComponentStyle.defaults()
                 .setBackgroundColor(secondaryBackgroundColor)
                 .setForegroundColor(foregroundColor);
     }
 
     @Override
     public ComponentStyle getButtonStyle() {
-        return new ComponentStyle()
+        return ComponentStyle.defaults()
                 .setBackgroundColor(secondaryBackgroundColor)
                 .setForegroundColor(foregroundColor)
                 .setBorder(border);
@@ -52,8 +53,10 @@ public class DarkTheme extends AbstractTheme {
 
     @Override
     public ComponentStyle getLabelStyle() {
-        return new ComponentStyle()
-                .setForegroundColor(foregroundColor);
+        return ComponentStyle.defaults()
+                .setForegroundColor(foregroundColor)
+                .setFontSize(20F)
+                .setTextWrap(TextWrap.NO_WRAP);
     }
 
 }

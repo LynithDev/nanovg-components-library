@@ -1,14 +1,13 @@
 package dev.lynith.nanovg.components.ui.widgets;
 
-import dev.lynith.nanovg.components.theme.ThemeManager;
 import dev.lynith.nanovg.components.ui.Component;
-import dev.lynith.nanovg.components.ui.ComponentStyle;
-import dev.lynith.nanovg.components.utils.Color;
+import dev.lynith.nanovg.components.ui.styles.ComponentStyle;
+import dev.lynith.nanovg.components.ui.styles.impl.TextWrap;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Button extends Component<ComponentStyle> {
+public class Button extends Component {
 
     @Setter
     private ClickCallback onClick;
@@ -28,6 +27,8 @@ public class Button extends Component<ComponentStyle> {
         this.onClick = onClick;
         this.text = text;
         this.label = new Label(text);
+
+        setBounds(0, 0, 100, 50);
     }
 
     public Button(String text) {
@@ -37,10 +38,10 @@ public class Button extends Component<ComponentStyle> {
     @Override
     public void init() {
         super.init();
-        setBounds(0, 0, 100, 50);
 
         label.init();
         label.setBounds(getBounds());
+        label.getStyle().setTextWrap(TextWrap.ELLIPSIS);
     }
 
     @Override
@@ -56,10 +57,10 @@ public class Button extends Component<ComponentStyle> {
     }
 
     @Override
-    public void onThemeUpdate() {
-        super.onThemeUpdate();
-
-        label.onThemeUpdate();
+    public void onThemeChange() {
+        super.onThemeChange();
+        label.onThemeChange();
+        label.getStyle().setTextWrap(TextWrap.ELLIPSIS);
     }
 
     @FunctionalInterface

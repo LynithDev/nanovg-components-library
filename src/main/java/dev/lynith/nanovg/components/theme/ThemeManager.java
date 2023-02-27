@@ -1,6 +1,8 @@
 package dev.lynith.nanovg.components.theme;
 
+import dev.lynith.nanovg.components.NVGManager;
 import dev.lynith.nanovg.components.theme.impl.LightTheme;
+import dev.lynith.nanovg.components.ui.widgets.Button;
 import lombok.Getter;
 
 public class ThemeManager {
@@ -10,11 +12,13 @@ public class ThemeManager {
 
     private AbstractTheme getTheme() {
         String themeClass = System.getProperty("nvg.theme", LightTheme.class.getName());
+
         try {
             return (AbstractTheme) Class.forName(themeClass).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             System.err.println("Failed to load theme: \"" + themeClass + "\"");
         }
+
         return new LightTheme();
     }
 
@@ -26,6 +30,7 @@ public class ThemeManager {
 
     public void setCurrentTheme(AbstractTheme theme) {
         this.currentTheme = theme;
+        NVGManager.getCurrentScreen().onThemeChange();
     }
 
 }

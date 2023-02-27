@@ -9,8 +9,6 @@ public class StackLayout extends AbstractLayout {
     @Override
     public void init() {
         super.init();
-
-        System.out.println(getStyle().getWrap());
     }
 
     @Override
@@ -20,7 +18,7 @@ public class StackLayout extends AbstractLayout {
         float y = getTop();
 
         for (int i = 0; i < getChildren().size(); i++) {
-            Component<?> child = getChildren().get(i);
+            Component child = getChildren().get(i);
             child.setBounds(getLeft() + child.getStyle().getBorder().getWidth(), y + child.getStyle().getBorder().getWidth(), getWidth() == 0 ? child.getWidth() : getWidth(), child.getHeight());
             y += child.getOuterHeight();
         }

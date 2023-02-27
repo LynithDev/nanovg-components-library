@@ -1,16 +1,17 @@
 package dev.lynith.nanovg.components.ui;
 
 import dev.lynith.nanovg.components.theme.ThemeManager;
+import dev.lynith.nanovg.components.ui.styles.ComponentStyle;
 import dev.lynith.nanovg.components.utils.BoxBounds;
-import dev.lynith.nanovg.components.utils.Color;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class Component<T extends ComponentStyle> extends NVGHelper {
+import java.lang.reflect.Field;
+
+public abstract class Component extends NVGHelper {
 
     // --- Base ---
-
     public void render(PointBounds mouseBounds) {
         hovered = mouseBounds.inside(bounds);
 
@@ -18,31 +19,31 @@ public abstract class Component<T extends ComponentStyle> extends NVGHelper {
         if (getStyle().hasBorder()) renderBorder();
     }
 
-    public void onThemeUpdate() {
-        setStyle(ThemeManager.getManager().getCurrentTheme().getComponentStyle(this));
+    public void init() {
+        onThemeChange();
     }
 
-    public void init() {
-        setStyle(ThemeManager.getManager().getCurrentTheme().getComponentStyle(this));
+    public void onThemeChange() {
+        ComponentStyle style = ThemeManager.getManager().getCurrentTheme().getComponentStyle(this);
+        setStyleBase(style);
     }
 
     public void onClick(PointBounds mouseBounds, int button) {}
     public void onRelease(PointBounds mouseBounds, int state) {}
     public void onKeyTyped(char typedChar, int keyCode) {}
 
-    public Component(T style) {
+    public Component(ComponentStyle style) {
         this.style = style;
     }
 
-    @SuppressWarnings("unchecked")
     public Component() {
-        this((T) new ComponentStyle());
+        this(ComponentStyle.defaults());
     }
 
     // --- Properties ---
 
     @Getter @Setter
-    private Component<?> parent;
+    private Component parent;
 
     @Getter @Setter
     private boolean hovered = false;
@@ -50,8 +51,45 @@ public abstract class Component<T extends ComponentStyle> extends NVGHelper {
     @Getter @Setter
     private BoxBounds bounds = new BoxBounds();
 
-    @Setter @Getter
-    private T style;
+    // --- Style ---
+
+    private ComponentStyle style;
+
+    public void setStyleBase(ComponentStyle style) {
+        this.style = style;
+    }
+
+    public ComponentStyle getStyle() {
+        return styleOverride != null ? getMergedStyles(styleOverride) : style;
+    }
+
+    private ComponentStyle styleOverride;
+
+    private ComponentStyle getMergedStyles(ComponentStyle override) {
+        ComponentStyle mergedStyle = style.clone();
+        for (Field field : ComponentStyle.class.getDeclaredFields()) {
+            try {
+                field.setAccessible(true);
+                if (field.get(override) != null) {
+                    field.set(mergedStyle, field.get(override));
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return mergedStyle;
+    }
+
+    // Overwrite the style of this component and return the child component
+    public <C extends Component> C setStyle(ComponentStyleOverwrite styleOverwrite) {
+        this.styleOverride = styleOverwrite.overwrite(new ComponentStyle());
+        return (C) this;
+    }
+
+    @FunctionalInterface
+    public interface ComponentStyleOverwrite {
+        ComponentStyle overwrite(ComponentStyle style);
+    }
 
     // --- Helpers ---
 

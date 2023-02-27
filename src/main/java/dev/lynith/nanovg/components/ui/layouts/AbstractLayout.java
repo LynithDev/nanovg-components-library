@@ -8,16 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractLayout extends Component<LayoutStyles> {
+public abstract class AbstractLayout extends Component {
 
     @Getter
-    private final List<Component<?>> children = new ArrayList<>();
+    private final List<Component> children = new ArrayList<>();
 
-    public AbstractLayout() {
-        super(new LayoutStyles());
-    }
-
-    public void add(Component<?>... component) {
+    public void add(Component... component) {
         children.addAll(Arrays.asList(component));
     }
 
@@ -25,7 +21,7 @@ public abstract class AbstractLayout extends Component<LayoutStyles> {
     public void onClick(PointBounds mouseBounds, int mouseButton) {
         super.onClick(mouseBounds, mouseButton);
 
-        for (Component<?> child : children) {
+        for (Component child : children) {
             if (mouseBounds.inside(child.getBounds())) {
                 child.onClick(mouseBounds, mouseButton);
             }
@@ -33,10 +29,19 @@ public abstract class AbstractLayout extends Component<LayoutStyles> {
     }
 
     @Override
+    public void onThemeChange() {
+        super.onThemeChange();
+
+        for (Component child : children) {
+            child.onThemeChange();
+        }
+    }
+
+    @Override
     public void onRelease(PointBounds mouseBounds, int state) {
         super.onRelease(mouseBounds, state);
 
-        for (Component<?> child : children) {
+        for (Component child : children) {
             child.onRelease(mouseBounds, state);
         }
     }
@@ -45,7 +50,7 @@ public abstract class AbstractLayout extends Component<LayoutStyles> {
     public void onKeyTyped(char typedChar, int keyCode) {
         super.onKeyTyped(typedChar, keyCode);
 
-        for (Component<?> child : children) {
+        for (Component child : children) {
             child.onKeyTyped(typedChar, keyCode);
         }
     }
@@ -54,7 +59,7 @@ public abstract class AbstractLayout extends Component<LayoutStyles> {
     public void render(PointBounds mouseBounds) {
         super.render(mouseBounds);
 
-        for (Component<?> child : children) {
+        for (Component child : children) {
             child.render(mouseBounds);
         }
     }
@@ -63,17 +68,8 @@ public abstract class AbstractLayout extends Component<LayoutStyles> {
     public void init() {
         super.init();
 
-        for (Component<?> child : children) {
+        for (Component child : children) {
             child.init();
-        }
-    }
-
-    @Override
-    public void onThemeUpdate() {
-        super.onThemeUpdate();
-
-        for (Component<?> child : children) {
-            child.onThemeUpdate();
         }
     }
 

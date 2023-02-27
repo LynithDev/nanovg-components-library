@@ -1,4 +1,4 @@
-package dev.lynith.nanovg.components.ui.styles;
+package dev.lynith.nanovg.components.ui.styles.impl;
 
 public enum TextAlignment {
 
