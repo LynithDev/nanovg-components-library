@@ -24,18 +24,14 @@ public class MainScreen extends ScreenComponent {
 
         Label label2 = new Label("Label Two");
 
-        Panel panel = new Panel();
-        panel.setLayout(Layouts.STACK);
-        panel.add(
+        getRootPanel().setLayout(Layouts.STACK);
+        getRootPanel().add(
             label1,
+            new Label("Label Three").setStyle(style -> {
+                style.setForegroundColor(new Color(160, 160, 0));
+                return style;
+            }),
             label2
-        );
-
-        getPanel().setLayout(Layouts.STACK);
-        getPanel().add(
-            label1,
-            label2,
-            panel
         );
     }
 

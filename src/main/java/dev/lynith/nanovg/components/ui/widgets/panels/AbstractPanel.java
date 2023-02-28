@@ -4,6 +4,7 @@ import dev.lynith.nanovg.components.exceptions.ParentException;
 import dev.lynith.nanovg.components.ui.Component;
 import dev.lynith.nanovg.components.ui.layouts.AbstractLayout;
 import dev.lynith.nanovg.components.ui.layouts.Layouts;
+import dev.lynith.nanovg.components.ui.layouts.impl.AbsoluteLayout;
 import dev.lynith.nanovg.components.ui.layouts.impl.StackLayout;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
@@ -20,7 +21,15 @@ public class AbstractPanel<T extends AbstractPanel<?>> extends Component {
     private final List<Component> children = new ArrayList<>();
 
     @Getter
-    private AbstractLayout layout = new StackLayout(this);
+    private AbstractLayout layout = new AbsoluteLayout(this);
+
+    public AbstractPanel() {
+
+    }
+
+    public AbstractPanel(Layouts layout) {
+        setLayout(layout);
+    }
 
     public void setLayout(AbstractLayout layout) {
         this.layout = layout;
@@ -146,7 +155,6 @@ public class AbstractPanel<T extends AbstractPanel<?>> extends Component {
     @Override
     public void init() {
         super.init();
-        setBounds(getParent().getBounds());
 
         for (Component child : children) {
             child.init();

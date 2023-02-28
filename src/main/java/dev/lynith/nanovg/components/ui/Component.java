@@ -60,7 +60,7 @@ public abstract class Component extends NVGHelper {
 
     private ComponentStyle style;
 
-    public void setStyleBase(ComponentStyle style) {
+    private void setStyleBase(ComponentStyle style) {
         this.style = style;
     }
 
@@ -126,6 +126,26 @@ public abstract class Component extends NVGHelper {
 
     public void setBounds(float left, float top, float width, float height) {
         this.bounds.set(left, top, width, height);
+    }
+
+    public void setWidth(float width) {
+        this.bounds.setWidth(width);
+    }
+
+    public void setHeight(float height) {
+        this.bounds.setHeight(height);
+    }
+
+    public void setLeft(float left) {
+        this.bounds.setLeft(left);
+    }
+
+    public void setTop(float top) {
+        this.bounds.setTop(top);
+    }
+
+    public void setSize(float width, float height) {
+        this.bounds.setSize(width, height);
     }
 
     // --- Other ---
