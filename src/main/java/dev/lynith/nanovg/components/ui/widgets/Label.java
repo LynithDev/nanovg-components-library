@@ -14,19 +14,9 @@ public class Label extends Component {
     @Getter @Setter
     private String text;
 
-    public Label(String text, float fontSize, FontWeight fontWeight) {
+    public Label(String text) {
         super();
         this.text = text;
-        getStyle().setFontSize(fontSize);
-        getStyle().setFontWeight(fontWeight);
-    }
-
-    public Label(String text, int fontSize) {
-        this(text, fontSize, FontWeight.REGULAR);
-    }
-
-    public Label(String text) {
-        this(text, 18, FontWeight.REGULAR);
     }
 
     @Override
@@ -42,6 +32,14 @@ public class Label extends Component {
 
     public float getTextHeight(String text) {
         return getStyle().getFontFamily().getFont(getStyle().getFontWeight()).getHeight(NVGManager.getNvg(), getStyle().getFontSize());
+    }
+
+    @Override
+    public String toString() {
+        return "Label{" +
+                "text='" + text + '\'' +
+                ", bounds=" + getBounds() +
+                '}';
     }
 
     @Override

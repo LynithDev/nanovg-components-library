@@ -53,7 +53,7 @@ public abstract class AbstractTheme {
 
     // --- Component Styles ---
     public abstract ComponentStyle getScreenStyle();
-    public abstract ComponentStyle getLayoutStyle();
+    public abstract ComponentStyle getPanelStyle();
 
     public abstract ComponentStyle getButtonStyle();
     public abstract ComponentStyle getLabelStyle();

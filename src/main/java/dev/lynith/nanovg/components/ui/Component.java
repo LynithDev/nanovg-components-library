@@ -40,6 +40,11 @@ public abstract class Component extends NVGHelper {
         this(ComponentStyle.defaults());
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "={bounds=" + bounds + "}";
+    }
+
     // --- Properties ---
 
     @Getter @Setter
@@ -127,13 +132,14 @@ public abstract class Component extends NVGHelper {
 
     private void renderBorder() {
         drawRectRoundOutline(
-                getLeft() - getStyle().getBorder().getWidth() / 2,
-                getTop() - getStyle().getBorder().getWidth() / 2,
-                getWidth() + getStyle().getBorder().getWidth(),
-                getHeight() + getStyle().getBorder().getWidth(),
-                getStyle().getBorder().getRadius(),
-                getStyle().getBorder().getWidth(),
-                getStyle().getBorder().getColor());
+            getLeft() - getStyle().getBorder().getWidth() / 2,
+            getTop() - getStyle().getBorder().getWidth() / 2,
+            getWidth() + getStyle().getBorder().getWidth(),
+            getHeight() + getStyle().getBorder().getWidth(),
+            getStyle().getBorder().getRadius(),
+            getStyle().getBorder().getWidth(),
+            getStyle().getBorder().getColor()
+        );
     }
 
     private void renderBackground() {

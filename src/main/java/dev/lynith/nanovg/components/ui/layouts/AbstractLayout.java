@@ -1,76 +1,32 @@
 package dev.lynith.nanovg.components.ui.layouts;
 
 import dev.lynith.nanovg.components.ui.Component;
+import dev.lynith.nanovg.components.ui.styles.impl.LayoutDirection;
 import dev.lynith.nanovg.components.utils.PointBounds;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractLayout extends Component {
+public abstract class AbstractLayout {
 
     @Getter
-    private final List<Component> children = new ArrayList<>();
+    private final Component parent;
 
-    public void add(Component... component) {
-        children.addAll(Arrays.asList(component));
+    @Getter @Setter
+    private LayoutDirection direction = LayoutDirection.VERTICAL;
+
+    public AbstractLayout(Component parent) {
+        this.parent = parent;
     }
 
-    @Override
-    public void onClick(PointBounds mouseBounds, int mouseButton) {
-        super.onClick(mouseBounds, mouseButton);
-
-        for (Component child : children) {
-            if (mouseBounds.inside(child.getBounds())) {
-                child.onClick(mouseBounds, mouseButton);
-            }
-        }
+    public AbstractLayout(Component parent, LayoutDirection direction) {
+        this(parent);
+        this.direction = direction;
     }
 
-    @Override
-    public void onThemeChange() {
-        super.onThemeChange();
-
-        for (Component child : children) {
-            child.onThemeChange();
-        }
-    }
-
-    @Override
-    public void onRelease(PointBounds mouseBounds, int state) {
-        super.onRelease(mouseBounds, state);
-
-        for (Component child : children) {
-            child.onRelease(mouseBounds, state);
-        }
-    }
-
-    @Override
-    public void onKeyTyped(char typedChar, int keyCode) {
-        super.onKeyTyped(typedChar, keyCode);
-
-        for (Component child : children) {
-            child.onKeyTyped(typedChar, keyCode);
-        }
-    }
-
-    @Override
-    public void render(PointBounds mouseBounds) {
-        super.render(mouseBounds);
-
-        for (Component child : children) {
-            child.render(mouseBounds);
-        }
-    }
-
-    @Override
-    public void init() {
-        super.init();
-
-        for (Component child : children) {
-            child.init();
-        }
-    }
+    public abstract void render(PointBounds mouseBounds, List<Component> children);
 
 }

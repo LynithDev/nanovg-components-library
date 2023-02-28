@@ -30,7 +30,6 @@ public class ComponentStyle implements Cloneable {
 
     private LayoutDirection direction;
     private Wrap wrap;
-    private Overflow overflow;
 
     public static ComponentStyle defaults() {
         return new ComponentStyle(
@@ -45,8 +44,7 @@ public class ComponentStyle implements Cloneable {
                 FontManager.getManager().getDefaultFontFamily(),
                 TextWrap.WRAP,
                 LayoutDirection.VERTICAL,
-                Wrap.WRAP,
-                Overflow.VISIBLE
+                Wrap.WRAP
         );
     }
 

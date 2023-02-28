@@ -9,6 +9,7 @@ import dev.lynith.nanovg.components.ui.styles.impl.Spacing;
 import dev.lynith.nanovg.components.ui.styles.impl.TextWrap;
 import dev.lynith.nanovg.components.ui.widgets.Button;
 import dev.lynith.nanovg.components.ui.widgets.Label;
+import dev.lynith.nanovg.components.ui.widgets.panels.AbstractPanel;
 import dev.lynith.nanovg.components.utils.Color;
 
 public class LightTheme extends AbstractTheme {
@@ -17,7 +18,7 @@ public class LightTheme extends AbstractTheme {
         super("Default Light", ThemeType.LIGHT);
 
         registerStyle(ScreenComponent.class, getScreenStyle());
-        registerStyle(AbstractLayout.class, getLayoutStyle());
+        registerStyle(AbstractPanel.class, getPanelStyle());
         registerStyle(Button.class, getButtonStyle());
         registerStyle(Label.class, getLabelStyle());
     }
@@ -37,7 +38,7 @@ public class LightTheme extends AbstractTheme {
     }
 
     @Override
-    public ComponentStyle getLayoutStyle() {
+    public ComponentStyle getPanelStyle() {
         return ComponentStyle.defaults()
                 .setBackgroundColor(secondaryBackgroundColor)
                 .setForegroundColor(foregroundColor);
